@@ -20,7 +20,7 @@ var forceHardReset = false;
 var player
 var metaSave = null
 var modes = {}
-var gameSpeed = 1
+var gameSpeed = 100
 
 
 function setupAutobuyerHTMLandData(){
@@ -6147,7 +6147,6 @@ function gameLoop(diff) {
 		}
 	}
 	
-	if (player.aarexModifications.ngp3c && document.getElementById("acnd").style.display!="none") updateObscurements();
 
 	thisQuantumTimeUpdating()
 	var s = shortenDimensions(player.infinityPoints)
