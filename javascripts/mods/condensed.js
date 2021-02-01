@@ -452,7 +452,7 @@ function ts203Eff() {
 	return eff;
 }
 
-const OBSCUREMENTS = {
+/*const OBSCUREMENTS = {
 	nd: {
 		title: "Normal Dimension Multipliers",
 		scID: "NDs",
@@ -533,10 +533,11 @@ function updateObscurements() {
 		}
 		html += "</ul><br><br>"
 	}
+	
 	if (html=="") html+="Oh hey there's nothing here yet... you need to make more progress first, so check in later!"
 	document.getElementById("obscurements").innerHTML = html;
 }
-
+*/
 function getDil26Mult() {
 	let mult = Math.pow(10, Math.pow(Math.log10(player.dilation.tachyonParticles.plus(1).log10()/5+1)+1, 1/4)-1)
 	return mult;
