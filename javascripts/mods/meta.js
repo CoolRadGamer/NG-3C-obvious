@@ -43,7 +43,7 @@ function getMetaDimensionMultiplier(tier) {
 	if (!tmp.ngp3l && tier == 1 && player.achievements.includes("ng3p17")) ret = ret.times(Math.max(1,Math.log10(player.totalmoney.plus(10).log10())))
 	
 	// NG+3C:
-	if (player.aarexModifications.ngp3c) ret = ret.times(getMetaCondenserEff(tier));
+	if (player.aarexModifications.ngp3c) ret = ret.times(tmp.cnd.meta[tier]);
 	
 	ret = dilates(dilates(ret.max(1), 2), "meta")
 	if (player.dilation.upgrades.includes("ngmm8")) ret = ret.pow(getDil71Mult())
@@ -352,7 +352,7 @@ function getExtraDimensionBoostPowerExponent(ma) {
 		if (!tmp.ngp3l && power > 1e8) power = Math.pow(power * 1e6, 4/7)
 		return power
 	}
-	if (player.dilation.upgrades.includes("ngpp5")) power++
+	if (player.dilation.upgrades.includes("ngpp5")) power+=player.aarexModifications.ngp3c?4:1
 	power += getECReward(13)
 	if (tmp.ngp3) {
 		if (isNanoEffectUsed("ma_effect_exp")) power += tmp.nf.effects.ma_effect_exp

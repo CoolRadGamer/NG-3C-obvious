@@ -82,6 +82,10 @@ function getDilUpgPower(x) {
 	if (player.aarexModifications.nguspV) r += exDilationUpgradeStrength(x)
 	else if (player.exdilation != undefined && !player.aarexModifications.ngudpV) r *= exDilationUpgradeStrength(x)
 	if (player.dilation.upgrades.includes("ngp3c8") && player.aarexModifications.ngp3c && x!=3) r *= getDil85Mult()
+	if (x==6) {
+		if (player.masterystudies.includes("t267")) r *= 1.5
+		r *= getECReward(14, true)
+	}
 	return r
 }
 
@@ -189,6 +193,10 @@ function dilates(x, m) {
 		e *= dilationPowerStrength()
 		a = true
 	}
+	if (player.currentEternityChall == "eterc13" && player.aarexModifications.ngp3c) {
+		e *= Math.pow(dilationPowerStrength(), 2)
+		a = true
+	}
 	if (a) {
 		if (m != "tick") x = x.max(1)
 		else if (player.galacticSacrifice == undefined) x = x.times(1e3)
@@ -249,6 +257,7 @@ const DIL_UPG_COSTS = {
 	  ngpp1_p3c: 1e18,
 	  ngpp2_p3c: 5e18,
 	  ngpp4_p3c: 1e56,
+	  ngpp5_p3c: 1e64,
 	  ngmm1: 5e16,
 	  ngmm2: 1e19,
 	  ngmm3: 1e20,
@@ -490,6 +499,7 @@ function updateDilationUpgradeButtons() {
 		document.getElementById("dil51desc").textContent = "Currently: " + shortenMoney(getDil14Bonus()) + 'x';
 		document.getElementById("dil52desc").textContent = "Currently: " + shortenMoney(getDil15Bonus()) + 'x';
 		document.getElementById("dil52ngp3cdesc").textContent = player.aarexModifications.ngp3c?", and get 1 of each time & meta condenser for free":""
+		document.getElementById("dil53desc").textContent = "(^8 -> ^"+(player.aarexModifications.ngp3c?"12), and it also multiplies Infinity & Time Dimensions (unaffected by Obscurements).":"9)")
 		document.getElementById("dil54formula").textContent = "(log(x)^0.5" + (tmp.ngp3 ? ")" : "/2)")
 		document.getElementById("dil54desc").textContent = "Currently: " + shortenMoney(getDil17Bonus()) + 'x';
 	}

@@ -287,7 +287,7 @@ function infinityUpgradesDisplay(){
 	if (player.infinityUpgrades.includes("skipResetGalaxy")) document.getElementById("infi44").className = "infinistorebtnbought"
 	else if (player.infinityUpgrades.includes("skipReset3") && player.infinityPoints.gte(500)) document.getElementById("infi44").className = "infinistorebtn4"
 	else document.getElementById("infi44").className = "infinistorebtnlocked"
-	document.getElementById("infi11").innerHTML = "Normal Dimensions gain a multiplier based on time played "+(player.aarexModifications.ngp3c?"and your Antimatter":"")+"<br>Currently: " + (infUpg11Pow()).toFixed(2) + "x<br>Cost: 1 IP"
+	document.getElementById("infi11").innerHTML = "Normal Dimensions gain a multiplier based on time played "+(player.aarexModifications.ngp3c?"and your Antimatter":"")+"<br>Currently: " + shorten(infUpg11Pow()) + "x<br>Cost: 1 IP"
 	document.getElementById("infi12").innerHTML = "First and Eighth Dimensions"+(player.aarexModifications.ngp3c?", and Tickspeed":"")+" gain a multiplier based on your Infinities<br>Currently: " + formatValue(player.options.notation, dimMults(), 1, 1) + "x<br>Cost: 1 IP"
 	document.getElementById("infi13").innerHTML = "Third and Sixth Dimensions"+(player.aarexModifications.ngp3c?", and Tickspeed":"")+" gain a multiplier based on your Infinities<br>Currently: " + formatValue(player.options.notation, dimMults(), 1, 1) + "x<br>Cost: 1 IP"
 	document.getElementById("infi22").innerHTML = "Second and Seventh Dimensions"+(player.aarexModifications.ngp3c?", and Tickspeed":"")+" gain a multiplier based on your Infinities<br>Currently: " + formatValue(player.options.notation, dimMults(), 1, 1) + "x<br>Cost: 1 IP"
@@ -911,6 +911,7 @@ function ECchallengePortionDisplay(){
 	document.getElementById("eterc11desc").textContent = player.aarexModifications.ngp3c?"All Dimension multipliers are disabled, except for the multipliers from Infinity Power, Dimension Boosts, and Normal Condensers to Normal Dimensions.":"All Dimension multipliers are disabled, except for the multipliers from Infinity Power and Dimension Boosts to Normal Dimensions."
 	let ec12TimeLimit = Math.round(getEC12TimeLimit() * 10) / 100
 	for (var c=1;c<15;c++) document.getElementById("eterc"+c+"goal").textContent = "Goal: "+shortenCosts(getECGoal("eterc"+c))+" IP"+(c==12?" in "+ec12TimeLimit+" second"+(ec12TimeLimit==1?"":"s")+" or less.":c==4?" in "+Math.max((16-(ECTimesCompleted("eterc4")*4)),0)+" infinities or less.":"")
+	document.getElementById("eterc13desc").textContent = player.aarexModifications.ngp3c?"You are trapped in IC10, which also applies to Time Dimensions, and you are trapped in 2 layers of dilation.":"Infinity Dimensions are disabled, and the Dimension Boost multiplier to Normal Dimensions is nullified."
 }
 
 function EC8PurchasesDisplay(){

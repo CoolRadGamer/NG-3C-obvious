@@ -112,9 +112,9 @@ function getDimensionFinalMultiplier(tier) {
 	
 	if (player.aarexModifications.newGameMinusVersion !== undefined) mult = mult.times(.1)
 	if (!tmp.infPow) updateInfinityPowerEffects()
-	if (player.currentChallenge == "postcngc_2" || player.currentChallenge == "postcngm3_2" || player.currentEternityChall == "eterc11") {
+	if (player.currentChallenge == "postcngc_2" || isIC10Trapped() || player.currentChallenge == "postcngm3_2" || player.currentEternityChall == "eterc11") {
 		let forcedMult = new Decimal(1);
-		if (player.currentChallenge == "postcngc_2") forcedMult = ((player.aarexModifications.ngp3c?tmp.cnd.nrm[tier]:1)||1)
+		if (player.currentChallenge == "postcngc_2" || isIC10Trapped()) forcedMult = ((player.aarexModifications.ngp3c?tmp.cnd.nrm[tier]:1)||1)
 		else if (player.currentChallenge == "postcngm3_2") forcedMult = tmp.infPow.max(1e100)
 		else if (player.currentEternityChall == "eterc11") forcedMult = tmp.infPow.times(Decimal.pow(getDimensionBoostPower(), player.resets - tier + 1).max(1))
 		if (player.aarexModifications.ngp3c) return softcap(forcedMult, "ngp3cNDs")
@@ -247,6 +247,7 @@ function canBuyDimension(tier) {
 }
 	
 function getDimensionPowerMultiplier(focusOn, debug) {
+	if (player.currentEternityChall == "eterc13" && player.aarexModifications.ngp3c) return new Decimal(1);
 	let ret = focusOn || inNC(9) || player.currentChallenge=="postc1" ? getMPTBase(focusOn) : tmp.mptb
 	let exp = 1
 	if (tmp.ngp3 && focusOn != "linear") exp = focusOn == "no-rg4" ? getMPTExp(focusOn) : tmp.mpte
@@ -505,7 +506,7 @@ function infUpg11Pow() {
 	if (player.aarexModifications.ngp3c) pow *= Math.log10(player.money.plus(1).log10()+1)*3+1
 	
 	if (player.galacticSacrifice) return Math.max(Math.pow(player.totalTimePlayed / 864e3, 0.75*pow), 1)
-	else return Math.max(Math.pow(player.totalTimePlayed / 1200, 0.15*pow), 1)
+	else return Math.min(Math.max(Math.pow(player.totalTimePlayed / 1200, 0.15*pow), 1), Number.MAX_VALUE)
 }
 
 function infUpg13Pow() {

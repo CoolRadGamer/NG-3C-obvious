@@ -73,6 +73,9 @@ function getTimeDimensionPower(tier) {
 	if (player.currentEternityChall == "eterc11") return new Decimal(1)
 	if (tmp.be) return getBreakEternityTDMult(tier)
 	var dim = player["timeDimension" + tier]
+
+	if (player.currentEternityChall == "eterc13" && player.aarexModifications.ngp3c) return tmp.cnd.time[tier];
+	
 	var ret = dim.power.pow(player.boughtDims ? 1 : 2)
 
 	if (hasPU(32)) ret = ret.times(puMults[32]())
@@ -103,7 +106,10 @@ function getTimeDimensionPower(tier) {
 	if (player.aarexModifications.ngp3c && tmp.cnd) ret = ret.times(tmp.cnd.time[tier])
 	if (player.dilation.upgrades.includes("ngmm8")) ret = ret.pow(getDil71Mult())
 	
-	if (player.aarexModifications.ngp3c) ret = softcap(ret, "ngp3cTDs")
+	if (player.aarexModifications.ngp3c) {
+		ret = softcap(ret, "ngp3cTDs");
+		if (player.dilation.upgrades.includes("ngpp5")) ret = ret.times(getExtraDimensionBoostPower());
+	}
 
 	return ret
 }
@@ -235,11 +241,16 @@ function buyTimeDimension(tier) {
 		if (inNC(2) || player.currentChallenge == "postc1" || player.pSac != undefined) player.chall2Pow = 0
 		reduceMatter(1)
 	} else {
-		dim.power = dim.power.times(player.boughtDims ? 3 : 2)
+		dim.power = dim.power.times(getMultPerTimeDim())
 		dim.cost = timeDimCost(tier, dim.bought)
 		updateEternityUpgrades()
 	}
 	return true
+}
+
+function getMultPerTimeDim() {
+	let mult = player.boughtDims ? 3 : 2
+	return mult;
 }
 
 function resetTimeDimensions() {
@@ -305,7 +316,7 @@ function buyMaxTimeDimension(tier, bulk) {
 		dim.cost = dim.cost.times(Decimal.pow(timeDimCostMults[1][tier], toBuy))
 	} else {
 		dim.cost = timeDimCost(tier, dim.bought)
-		dim.power = dim.power.times(Decimal.pow(player.boughtDims ? 3 : 2, toBuy))
+		dim.power = dim.power.times(Decimal.pow(getMultPerTimeDim(), toBuy))
 		if (inQC(6)) player.postC8Mult = new Decimal(1)
 		updateEternityUpgrades()
 	}
